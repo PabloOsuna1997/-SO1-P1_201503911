@@ -11,15 +11,16 @@ contentFileA = ""
 txtJson = ""
 ObjectJson = any
 
+ipServer1 = 'http://18.222.140.82:5001'
 
 class NoteObject():
     def getNotes(self):
-        x = requests.get('http://127.0.0.1:5001/notes')
+        x = requests.get(ipServer1 + '/notes')
         data = x.json()
         return data
 
     def addNote(self, autor, nota ):
-        x = requests.post(url='http://127.0.0.1:5001/addnote', json={'autor':autor, 'nota':nota})
+        x = requests.post(url= ipServer1 + '/addnote', json={'autor':autor, 'nota':nota})
         return x
 
 class Menu():

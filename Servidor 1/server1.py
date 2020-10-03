@@ -3,8 +3,8 @@ from bson import json_util
 import requests
 
 app = Flask(__name__)
-ipA = 'http://18.220.134.88:5000'
-ipB = 'http://18.220.134.88:5000'
+ipA = 'http://18.222.41.87:5000'
+ipB = 'http://18.222.41.87:5000'
 
 @app.route('/notes', methods=['GET'])
 def getNotes():
