@@ -41,11 +41,30 @@ def getResourcesServerB():
 @app.route('/addnote', methods=['POST'])
 def addNote():
     #before make the request, verify wich server to select on your resources
+    resA = getResourcesServerA()
+    resB = getResourcesServerB()
+    decision = 0      # 0 is A, 1 is B
+    if resB['RAM'] > resA['RAM']:
+        decision = 1
+    elif resB['Len'] > resA['Len']:
+        decision = 1
+    elif resB['cpu'] > resA['cpu']:
+        decision = 1
+    else:
+        decision = 0
     
-    json_ = request.json
-    x = requests.post(url=ipA + '/addnote', json=json_)             #IP SERVER WINNER
-    respon = x.json()
-    return respon
+    if decision == 0:
+        json_ = request.json
+        x = requests.post(url=ipA + '/addnote', json=json_)             #IP SERVER WINNER A
+        respon = x.json()
+        print("###   A    ###")
+        return respon
+    else:
+        json_ = request.json
+        x = requests.post(url=ipB + '/addnote', json=json_)             #IP SERVER WINNER B
+        respon = x.json()
+        print("###   B    ###")
+        return respon
 
 
 if __name__ == "__main__":
