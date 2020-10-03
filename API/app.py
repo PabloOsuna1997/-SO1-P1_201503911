@@ -20,9 +20,9 @@ def addNote():
 @app.route('/getram', methods=['GET'])
 def getRAM():
     archivo = open("/proc/RAM_201503911","r")
-    for linea in archivo.readlines():
-        print(linea)
-    return "RAM: 25%"
+    lineas = archivo.readlines()
+    archivo.close()
+    return jsonify({'lineas': lineas})
 
 @app.route('/getcpu', methods=['GET'])
 def getCPU():
