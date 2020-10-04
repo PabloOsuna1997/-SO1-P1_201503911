@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, json, request, abort
 from bson import json_util
+from flask_cors import CORS
 import connectDB
     
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/notes', methods=['GET'])
 def getNotes():

@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, json, request, abort, request
+from flask_cors import CORS
 from bson import json_util
 import requests
 
 app = Flask(__name__)
+CORS(app)
 ipA = 'http://18.188.24.81:5000'
 ipB = 'http://18.188.24.81:5000'
 
