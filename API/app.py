@@ -18,9 +18,8 @@ def getResourcesServer():
     tmp1 = data['lineas'][0].split(':')
     ram = tmp[1]
     total = tmp1[0]
-    x = getNotes()
-    data = x.json()
-    resA = {'RAM': ( (int(ram[0:len(ram)-1]) * 100) / (int(total[0:len(total)-1]))), 'LEN': len(data['notes']), 'CPU': 4}
+    data = list(connectDB.getNotes())
+    resA = {'RAM': ( (int(ram[0:len(ram)-1]) * 100) / (int(total[0:len(total)-1]))), 'LEN': len(data), 'CPU': 4}
     return resA
 
 @app.route('/notes', methods=['GET'])
