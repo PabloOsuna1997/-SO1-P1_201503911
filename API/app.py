@@ -6,6 +6,23 @@ import connectDB
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/getres', methods=['GET'])
+def getres():    
+    res = getResourcesServer()
+    return jsonify({'resources':res})
+
+def getResourcesServer():
+    x = getRAM()
+    data = x.json()
+    tmp = data['lineas'][1].split(':')
+    tmp1 = data['lineas'][0].split(':')
+    ram = tmp[1]
+    total = tmp1[0]
+    x = getNotes()
+    data = x.json()
+    resA = {'RAM': ( (int(ram[0:len(ram)-1]) * 100) / (int(total[0:len(total)-1]))), 'LEN': len(data['notes']), 'CPU': 4}
+    return resA
+
 @app.route('/notes', methods=['GET'])
 def getNotes():
     docs_list  = list(connectDB.getNotes())
