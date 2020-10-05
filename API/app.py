@@ -13,14 +13,10 @@ def getres():
 
 def getResourcesServer():
     archivo = open("/proc/RAM_201503911","r")
-    data = archivo.readlines()
+    data1 = archivo.readlines()
     archivo.close()
-    tmp = data[1].split(':')
-    tmp1 = data[0].split(':')
-    ram = tmp[1]
-    total = tmp1[0]
     data = list(connectDB.getNotes())
-    resA = {'RAM': ( (int(ram[0:len(ram)-1]) * 100) / (int(total[0:len(total)-1]))), 'LEN': len(data), 'CPU': 4}
+    resA = {'RAM': data1, 'LEN': len(data), 'CPU': 4}
     return resA
 
 @app.route('/notes', methods=['GET'])
