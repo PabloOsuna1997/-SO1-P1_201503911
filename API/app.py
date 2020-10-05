@@ -12,10 +12,11 @@ def getres():
     return jsonify({'resources':res})
 
 def getResourcesServer():
-    x = getRAM()
-    data = x.json()
-    tmp = data['lineas'][1].split(':')
-    tmp1 = data['lineas'][0].split(':')
+    archivo = open("/proc/RAM_201503911","r")
+    data = archivo.readlines()
+    archivo.close()
+    tmp = data[1].split(':')
+    tmp1 = data[0].split(':')
     ram = tmp[1]
     total = tmp1[0]
     data = list(connectDB.getNotes())
