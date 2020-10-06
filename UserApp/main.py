@@ -11,7 +11,7 @@ contentFileA = ""
 txtJson = ""
 ObjectJson = any
 
-ipServer1 = 'http://18.189.22.240:5001'
+ipServer1 = 'http://127.0.0.1:5001'
 
 class NoteObject():
     def getNotes(self):
