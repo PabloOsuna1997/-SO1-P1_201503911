@@ -5,8 +5,8 @@ import requests
 
 app = Flask(__name__)
 CORS(app)
-ipA = 'http://52.15.46.210:5000'
-ipB = 'http://52.15.46.210:5000'
+ipA = 'http://18.222.190.190:5000'
+ipB = 'http://3.20.235.39:5000'
 
 @app.route('/notes', methods=['GET'])
 def getNotes():
