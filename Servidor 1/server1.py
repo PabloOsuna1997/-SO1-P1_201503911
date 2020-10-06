@@ -27,7 +27,7 @@ def getResourcesServerA():
     ram = tmp[1]
     x = requests.get(ipA + '/notes')            #IP SERVER A
     data = x.json()
-    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 4}
+    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 10}
     return resA
 
 def getResourcesServerB():
@@ -37,7 +37,7 @@ def getResourcesServerB():
     ram = tmp[1]
     x = requests.get(ipB + '/notes')            #IP SERVER B
     data = x.json()
-    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 2}
+    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 10}
     return resB
 
 @app.route('/addnote', methods=['POST'])
@@ -46,13 +46,26 @@ def addNote():
     resA = getResourcesServerA()
     resB = getResourcesServerB()
     decision = 0      # 0 is A, 1 is B
-    if resB['RAM'] > resA['RAM']:
+    if resB['Len'] < resA['Len']:
+        print("menores elementos B")
         decision = 1
-    elif resB['Len'] > resA['Len']:
+    elif resA['Len'] < resB['Len']:
+        print("menores elementos A")
+        decision = 0
+    elif resB['RAM'] < resA['RAM']:
+        print("menor ram B")
         decision = 1
-    elif resB['cpu'] > resA['cpu']:
+    elif resA['RAM'] < resB['RAM']:
+        print("menor ram A")
+        decision = 0
+    elif resB['cpu'] < resA['cpu']:
+        print("menor cpu B")
         decision = 1
+    elif resA['cpu'] < resB['cpu']:
+        print("menor cpu A")
+        decision = 0
     else:
+        print("else con A")
         decision = 0
     
     if decision == 0:
