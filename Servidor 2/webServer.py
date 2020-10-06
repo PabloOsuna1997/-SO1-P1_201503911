@@ -21,7 +21,7 @@ def getNotesB():
 
 @app.route('/getresA', methods=['GET'])
 def getresA():    
-    x = requests.get(ipB + '/getres')            #IP SERVER A
+    x = requests.get(ipA + '/getres')            #IP SERVER A
     data = x.json()
     return data
 
