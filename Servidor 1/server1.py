@@ -5,7 +5,7 @@ import requests
 
 app = Flask(__name__)
 CORS(app)
-ipA = 'http://18.222.190.190:5000'
+ipA = 'http://13.58.167.5:5000'
 ipB = 'http://3.20.235.39:5000'
 
 @app.route('/notes', methods=['GET'])
@@ -35,9 +35,17 @@ def getResourcesServerB():
     data = x.json()
     tmp = data['lineas'][1].split(':')
     ram = tmp[1]
+
+    x_cpu = requests.get(ipB + '/getcpu')           #IP SERVER B
+    data_cpu = x_cpu.json()
+    tmp_cpu = data_cpu['lineas'][1].split(':')
+    cpu_total = tmp_cpu[1]
+    cpu_usage = tmp_cpu[1]
+
     x = requests.get(ipB + '/notes')            #IP SERVER B
     data = x.json()
-    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 10}
+
+    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': (int(cpu_total)/int(cpu_usage)) * 100}
     return resB
 
 @app.route('/addnote', methods=['POST'])

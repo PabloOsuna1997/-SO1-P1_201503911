@@ -44,7 +44,13 @@ def getRAM():
 
 @app.route('/getcpu', methods=['GET'])
 def getCPU():
-    return "CPU: 15%"
+    archivo = open("/proc/CPU_201503911","r")
+    lineas = archivo.readlines()
+    archivo.close()
+    if len(lineas)>0:
+        return jsonify({'lineas': lineas})
+    else:
+        return jsonify({'lineas': 'No se pudo leer el modulo.'})
 
 
 if __name__ == "__main__":
