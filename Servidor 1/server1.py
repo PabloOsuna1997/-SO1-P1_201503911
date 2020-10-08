@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 ipA = 'http://13.58.167.5:5000'
-ipB = 'http://3.20.235.39:5000'
+ipB = 'http://18.223.169.91:5000'
 
 @app.route('/notes', methods=['GET'])
 def getNotes():
@@ -24,17 +24,16 @@ def getResourcesServerA():
     x = requests.get(ipA + '/getram')           #IP SERVER A
     data = x.json()
     tmp = data['lineas'][1].split(':')
-    ram = tmp[1]
+    ram = tmp[1]                                    #devuelvo la ram libre
 
     x_cpu = requests.get(ipA + '/getcpu')           #IP SERVER A
     data_cpu = x_cpu.json()
     tmp_cpu = data_cpu['lineas'][1].split(':')
-    cpu_total = tmp_cpu[1]
     cpu_usage = tmp_cpu[1]
 
     x = requests.get(ipA + '/notes')            #IP SERVER A
     data = x.json()
-    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': (int(cpu_total)/int(cpu_usage)) * 100}
+    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': int(cpu_usage)}
     return resA
 
 def getResourcesServerB():
@@ -46,13 +45,12 @@ def getResourcesServerB():
     x_cpu = requests.get(ipB + '/getcpu')           #IP SERVER B
     data_cpu = x_cpu.json()
     tmp_cpu = data_cpu['lineas'][1].split(':')
-    cpu_total = tmp_cpu[1]
     cpu_usage = tmp_cpu[1]
 
     x = requests.get(ipB + '/notes')            #IP SERVER B
     data = x.json()
 
-    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': (int(cpu_total)/int(cpu_usage)) * 100}
+    resB = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': int(cpu_usage)}
     return resB
 
 @app.route('/addnote', methods=['POST'])
@@ -67,11 +65,11 @@ def addNote():
     elif resA['Len'] < resB['Len']:
         print("menores elementos A")
         decision = 0
-    elif resB['RAM'] < resA['RAM']:
-        print("menor ram B")
+    elif resB['RAM'] > resA['RAM']:
+        print("mayo ram B libre")
         decision = 1
-    elif resA['RAM'] < resB['RAM']:
-        print("menor ram A")
+    elif resA['RAM'] > resB['RAM']:
+        print("mayor ram A libre")
         decision = 0
     elif resB['cpu'] < resA['cpu']:
         print("menor cpu B")
