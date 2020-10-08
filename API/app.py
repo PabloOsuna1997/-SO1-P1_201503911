@@ -15,8 +15,11 @@ def getResourcesServer():
     archivo = open("/proc/RAM_201503911","r")
     data1 = archivo.readlines()
     archivo.close()
+    archivo = open("/proc/CPU_201503911","r")
+    cpu = archivo.readlines()
+    archivo.close()
     data = list(connectDB.getNotes())
-    resA = {'RAM': data1, 'LEN': len(data), 'CPU': 4}
+    resA = {'RAM': data1, 'LEN': len(data), 'CPU': cpu}
     return resA
 
 @app.route('/notes', methods=['GET'])

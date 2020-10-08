@@ -25,9 +25,16 @@ def getResourcesServerA():
     data = x.json()
     tmp = data['lineas'][1].split(':')
     ram = tmp[1]
+
+    x_cpu = requests.get(ipA + '/getcpu')           #IP SERVER A
+    data_cpu = x_cpu.json()
+    tmp_cpu = data_cpu['lineas'][1].split(':')
+    cpu_total = tmp_cpu[1]
+    cpu_usage = tmp_cpu[1]
+
     x = requests.get(ipA + '/notes')            #IP SERVER A
     data = x.json()
-    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': 10}
+    resA = {'RAM': int(ram[0:len(ram)-1]), 'Len': len(data['notes']), 'cpu': (int(cpu_total)/int(cpu_usage)) * 100}
     return resA
 
 def getResourcesServerB():
